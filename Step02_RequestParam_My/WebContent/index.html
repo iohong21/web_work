@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Index.html</title>
+	<link rel="stylesheet" href="css/bootstrap.css" />
+</head>
+<body>
+	<div class="container">
+		<h3>인텍스 페이지 입니다.</h3>
+		<ul>
+			<label for="num">사원번호: <input type="text" id="num"/></label><button id="btnQuery">검색</button>
+			<li><a href="test?name=gura">링크를 누르면 GET 방식 요청</a></li>
+			<li><a href="test?name=aaaa">요청 2</a></li>
+			<li><a href="test?name=bbbb">요청 3</a></li>
+			<li><a href="cafe/list.html">글 목록보기</a></li>
+			<li><a href="buy?code=99&category=milk">구입</a></li>
+			<li><a href="users/loginform.html">로그인폼</a></li>
+		</ul>
+	</div>
+	<script src="js/jquery-3.3.1.js"></script>
+	<script>
+		$("#num").focus();
+		$("#btnQuery").click(function() {
+			var num = $("#num").val();
+			location.href = "member?empno="+num;
+		});
+	</script>
+</body>
+</html>
