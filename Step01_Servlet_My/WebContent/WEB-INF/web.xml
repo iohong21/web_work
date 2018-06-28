@@ -9,34 +9,36 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <!-- 서블릿 정의하기 -->
   <servlet>
-  	<servlet-name>showTimeServlet</servlet-name>
-  	<servlet-class>test.servlet.ShowTimeServlet</servlet-class>
+    <servlet-name>showTimeServlet</servlet-name>
+    <servlet-class>test.servlet.ShowTimeServlet</servlet-class>
   </servlet>
-  <!-- 서블릿 맵핑하기 -->
   <servlet-mapping>
-  	<servlet-name>showTimeServlet</servlet-name>
-  	<url-pattern>/showtime</url-pattern>
+    <servlet-name>showTimeServlet</servlet-name>
+    <url-pattern>/showtime</url-pattern>
   </servlet-mapping>
-  
   <servlet>
-  	<servlet-name>showFortuneServlet</servlet-name>
-  	<servlet-class>test.servlet.ShowFortuneServlet</servlet-class>
+    <servlet-name>showFortuneServlet</servlet-name>
+    <servlet-class>test.servlet.ShowFortuneServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>showFortuneServlet</servlet-name>
-  	<url-pattern>/showfortune</url-pattern>
+    <servlet-name>showFortuneServlet</servlet-name>
+    <url-pattern>/showfortune</url-pattern>
   </servlet-mapping>
-  
-  <!-- myServer 이라는 이름의 서블릿 정의하기 -->
   <servlet>
-  	<servlet-name>myServlet</servlet-name>
-  	<servlet-class>test.servlet.MyServlet</servlet-class>
+    <servlet-name>myServlet</servlet-name>
+    <servlet-class>test.servlet.MyServlet</servlet-class>
   </servlet>
-  <!-- myServlet 맵핑하기(어떤요청에 대해서 myServlet 을 사용할지) -->
   <servlet-mapping>
-  	<servlet-name>myServlet</servlet-name>
-  	<url-pattern>*.do</url-pattern>
+    <servlet-name>myServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>greet</servlet-name>
+    <servlet-class>test.servlet.MyGreet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>greet</servlet-name>
+    <url-pattern>/sub/greet</url-pattern>
   </servlet-mapping>
 </web-app>
