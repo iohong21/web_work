@@ -1,4 +1,4 @@
-package test.member.dao;
+package test.friends.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import test.friends.dto.FriendsDto;
-import test.member.dto.MemberDto;
+import test.friends.dto.FriendsDto;
 import test.util.DBConnect;
 
 /*
@@ -15,27 +15,27 @@ import test.util.DBConnect;
  * 
  * - 회원정보에 대해서 SELECT, INSERT, UPDATE, DELETE 작업을
  *   수행할 객체를 새엇ㅇ하기 위한 클래스 정의하기
- * - Application 전역에서 MemberDao 객체는 오직 1개만 생성될 수 있도록 설계한다.
+ * - Application 전역에서 Friends 객체는 오직 1개만 생성될 수 있도록 설계한다.
  * 
  */
-public class MemberDao {
+public class FriendsDao {
 	// 1. 자신의 Type 을 private static 멤버필드로 정의한다.
-	private static MemberDao dao = null;
+	private static FriendsDao dao = null;
 	
 	// 2. 외부에서 객체 생성할 수 없도록 생성자의 접근 지정자를 private로 지정
-	private MemberDao() {}
+	private FriendsDao() {}
 	
 	// 3. 자신의 참조값을 리턴해주는 static 멤버 메소드를 정의한다.
-	public static MemberDao getInstance() {
+	public static FriendsDao getInstance() {
 		if(dao == null) {			// 최초 호출될때는 null 이다.
-			dao = new MemberDao();	// 객체를 생성해서 필드에 저장한다.
+			dao = new FriendsDao();	// 객체를 생성해서 필드에 저장한다.
 		}
 		// 필드에 저장된 참조값을 리턴해준다.
 		return dao;
 	}
 		
 	// 회원정보를 저장하는 메소드
-	public boolean insert(MemberDto dto) {
+	public boolean insert(FriendsDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		// 영향을 받은 row 의 갯수를 저장할 지역 변수
@@ -43,10 +43,10 @@ public class MemberDao {
 		try {
 			// Connection 객체의 참조값 얻어오기
 			conn = new DBConnect().getConn();
-			String  sql = "insert into member(num, name, addr) values (member_seq.nextval, ?, ?)";
+			String  sql = "insert into friends(num, name, phone) values (friends_seq.nextval, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
-			pstmt.setString(2, dto.getAddr());
+			pstmt.setString(2, dto.getPhone());
 			flag = pstmt.executeUpdate();
 			
 		} catch (Exception ex) {
@@ -61,7 +61,7 @@ public class MemberDao {
 	}
 	
 	// 회원정보를 수정하는 메소드
-	public boolean update(MemberDto dto) {
+	public boolean update(FriendsDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		// 영향을 받은 row 의 갯수를 저장할 지역 변수
@@ -69,10 +69,10 @@ public class MemberDao {
 		try {
 			// Connection 객체의 참조값 얻어오기
 			conn = new DBConnect().getConn();
-			String  sql = "update member set name=?, addr=? where num=?";
+			String  sql = "update friends set name=?, phone=? where num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
-			pstmt.setString(2, dto.getAddr());
+			pstmt.setString(2, dto.getPhone());
 			pstmt.setInt(3, dto.getNum());
 			flag = pstmt.executeUpdate();
 			
@@ -96,7 +96,7 @@ public class MemberDao {
 		try {
 			// Connection 객체의 참조값 얻어오기
 			conn = new DBConnect().getConn();
-			String  sql = "delete from member where num=?";
+			String  sql = "delete from friends where num=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			flag = pstmt.executeUpdate();
@@ -113,21 +113,21 @@ public class MemberDao {
 	}
 	
 	// 회원 한명의 정보를 리턴하는 메소드
-	public MemberDto getData(int num) {
+	public FriendsDto getData(int num) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberDto dto = null;
+		FriendsDto dto = null;
 		
 		try {
 			// Connection 객체의 참조값 얻어오기
 			conn = new DBConnect().getConn();
-			String sql = "select name, addr from member where num = ?";
+			String sql = "select name, phone from friends where num = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1,  num);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				dto = new MemberDto(num, rs.getString("name"), rs.getString("addr"));
+				dto = new FriendsDto(num, rs.getString("name"), rs.getString("phone"));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -143,18 +143,34 @@ public class MemberDao {
 	}
 	
 	// 회원 목록을 리턴하는 메소드
-	public List<MemberDto> getList() {
+	public List<FriendsDto> getList() {	return getList("num", "ASC"); }
+	public List<FriendsDto> getList(String orderField) {
+		return getList(orderField, "ASC");
+	}
+	public List<FriendsDto> getList(String orderField, String orderType) {
 		Connection conn = null;
 		ResultSet rs = null;
-		List<MemberDto> listDto = new ArrayList<>();
+		List<FriendsDto> listDto = new ArrayList<>();
 		
 		try {
+			if(!orderType.toUpperCase().equals("ASC") && 
+			   !orderType.toUpperCase().equals("DESC")) {
+				orderType = "NONE";
+			}
 			// Connection 객체의 참조값 얻어오기
 			conn = new DBConnect().getConn();
-			String  sql = "select num, name, addr from member order by num";
-			rs = conn.prepareStatement(sql).executeQuery();
+			StringBuilder sb = new StringBuilder("select num, name, phone from friends ");
+			if(!orderType.toUpperCase().equals("NONE")) {
+				sb.append("order by ");
+				sb.append(orderField);
+				sb.append(" ");
+				sb.append(orderType);
+			}
+			rs = conn.prepareStatement(sb.toString()).executeQuery();
 			while(rs.next()) {
-				listDto.add(new MemberDto(rs.getInt("num"), rs.getString("name"), rs.getString("addr")));
+				listDto.add(new FriendsDto(rs.getInt("num"), 
+										   rs.getString("name"), 
+										   rs.getString("phone")));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

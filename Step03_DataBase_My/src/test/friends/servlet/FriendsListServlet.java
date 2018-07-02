@@ -1,4 +1,4 @@
-package test.member.servlet;
+package test.friends.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import test.member.dao.MemberDao;
+import test.friends.dao.FriendsDao;
+import test.friends.dto.FriendsDto;
 import test.member.dto.MemberDto;
 
-@WebServlet("/member/list")
-public class MemberListServlet  extends HttpServlet {
+@WebServlet("/friends/list")
+public class FriendsListServlet  extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		List<MemberDto> members = MemberDao.getInstance().getList(); 
+		List<FriendsDto> friends = FriendsDao.getInstance().getList(); 
 
+		String contextPath = req.getContextPath();
+		
 		// 응답 인코딩 설정
 		res.setCharacterEncoding("utf-8");
 		
@@ -33,41 +36,34 @@ public class MemberListServlet  extends HttpServlet {
 		pw.println("<html>");
 		pw.println("<head>");
 		pw.println("<meta charset='utf-8'>");
-		pw.println("<title>멤버 목록</title>");
-		pw.println("<link rel=\"stylesheet\" href=\"../css/bootstrap.css\">");
+		pw.println("<title>친구 목록</title>");
+		//pw.println("<link rel='stylesheet' href='" + contextPath + "/css/bootstrap.css'>");
+		pw.println("<link rel='stylesheet' href='../css/bootstrap.css'>");
 		pw.println("</head>");
 		pw.println("<body>");
 			pw.println("<div class='container'>");
-			  pw.println("<h2>멤버 목록</h2>");
-			  pw.println("<a href='insertForm.html' title='회원추가'>");
-			  	pw.println("<h4><strong>회원추가 폼</strong></h4>");
+			  pw.println("<h2>친구 목록</h2>");
+			  pw.println("<a href='insertForm.html' title='친구추가'>");
+			  	pw.println("<h4><strong>친구추가 폼</strong></h4>");
 			  pw.println("</a>");
-//			  
-//			  pw.println("<a href='updateSelect' title='회원수정'>");
-//			  	pw.println("<h4><strong>회원수정 폼</strong></h4>");
-//			  pw.println("</a>");
-//			  
-//			  pw.println("<a href='deleteSelect' title='회원삭제'>");
-//			  	pw.println("<h4><strong>회원삭제 폼</strong></h4>");
-//			  pw.println("</a>");
 			  
 			  pw.println("<table class='table table-bordered'>");
 			    pw.println("<thead>");
 			      pw.println("<tr>");
 			        pw.println("<th>번호</th>");
 			        pw.println("<th>이름</th>");
-			        pw.println("<th>주소</th>");
+			        pw.println("<th>전화번호</th>");
 			        pw.println("<th>수정</th>");
 			        pw.println("<th>삭제</th>");
 			      pw.println("</tr>");
 			    pw.println("</thead>");
 			    pw.println("<tbody>");
-			      if(members.size() >0) {
-					  for(MemberDto dto : members) {
+			      if(friends.size() > 0) {
+					  for(FriendsDto dto : friends) {
 						pw.println("<tr>");
 						pw.println("<td>"+dto.getNum()+"</td>");
 						pw.println("<td>"+dto.getName()+"</td>");
-						pw.println("<td>"+dto.getAddr()+"</td>");
+						pw.println("<td>"+dto.getPhone()+"</td>");
 						pw.println("<td><a href='updateform?num="+dto.getNum()+"'>수정</a></td>");
 				        pw.println("<th><a href='delete?num="+dto.getNum()+"'>삭제</a></th>");
 						pw.println("</tr>");
