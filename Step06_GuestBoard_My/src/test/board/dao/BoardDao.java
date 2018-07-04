@@ -197,7 +197,8 @@ public class BoardDao {
 			conn = new DbcpBean().getConn();
 			
 			// 실행할 select 문
-			StringBuilder sql = new StringBuilder("select num, writer, title, content, regdate");
+			StringBuilder sql = new StringBuilder("select num, writer, title, content");
+			sql.append("     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate");
 			sql.append("  from board_guest");
 			sql.append(" order by num");
 			
