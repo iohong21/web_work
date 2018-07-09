@@ -42,8 +42,6 @@ public class FileDao {
 			pstmt.setString(3, dto.getOrgFileName());
 			pstmt.setString(4, dto.getSaveFileName());
 			pstmt.setLong(5,  dto.getFileSize());
-			
-			System.out.println("Size : "  + dto.getFileSize());
 
 			// isnert 문 수행하고 추가된 row 의 갯수 리턴 받기
 			flag = pstmt.executeUpdate();
