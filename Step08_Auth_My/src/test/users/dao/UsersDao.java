@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.parser.RecoveredStatement;
+
 import test.users.dto.UsersDto;
 import test.util.DbcpBean;
 
@@ -134,7 +136,8 @@ public class UsersDao {
 	public boolean canUseId(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		boolean canUse = false;
+//		ResultSet rs = null;
+		boolean canUse = true;
 
 		try {
 			conn = new DbcpBean().getConn();
@@ -147,12 +150,17 @@ public class UsersDao {
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1,  id);
 
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				canUse = false;
+//			}
 			canUse = !pstmt.executeQuery().next();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			try {
+//				if(rs != null) rs.close();
 				if (pstmt != null)
 					pstmt.close();
 

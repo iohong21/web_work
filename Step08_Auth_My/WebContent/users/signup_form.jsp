@@ -101,6 +101,7 @@
 					method: "post",
 					data: {inputId:inputId},
 					success: function(responseData){
+						console.log(responseData);
 						if(!responseData.canUse) {
 							formValid = false;
 							$("#canUse").text("이미 사용중인 ID").css("color", "red");
