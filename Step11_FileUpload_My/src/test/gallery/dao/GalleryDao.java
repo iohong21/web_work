@@ -1,4 +1,4 @@
-package test.file.dao;
+package test.gallery.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,23 +6,20 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import test.file.dto.FileDto;
+import test.gallery.dto.GalleryDto;
 import test.util.DbcpBean;
 
-public class FileDao {
-	private static FileDao dao = null;
-	
-	private FileDao() {}
-	public static FileDao getInstance() {
+public class GalleryDao {
+	private static GalleryDao dao = null;
+	private GalleryDao() {}
+	public static GalleryDao getInstance() {
 		if(dao == null) {
-			dao = new FileDao();
+			dao = new GalleryDao();
 		}
-		
 		return dao;
 	}
 	
-	// 파일 정보를 저장하는 메소드
-	public boolean insert(FileDto dto) {
+	public boolean insert(GalleryDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int flag = 0;
@@ -30,20 +27,16 @@ public class FileDao {
 		try {
 			conn = new DbcpBean().getConn();
 			StringBuilder sql = new StringBuilder();
-			sql.append("insert into board_file");
-			sql.append(" (num, writer, title, orgFileName, saveFileName, fileSize, regdate)");
-			sql.append(" values(board_file_seq.nextval, ?, ?, ?, ?, ?, SYSDATE)");
+			sql.append("insert into board_gallery(num, writer, caption, imagePath, regdate)");
+			sql.append(" values(board_gallery_seq.nextval, ?, ?, ?, SYSDATE)");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
 			// ? 에 값 바인딩하기
 			pstmt.setString(1, dto.getWriter());
-			pstmt.setString(2, dto.getTitle());
-			pstmt.setString(3, dto.getOrgFileName());
-			pstmt.setString(4, dto.getSaveFileName());
-			pstmt.setLong(5,  dto.getFileSize());
+			pstmt.setString(2,  dto.getCaption());
+			pstmt.setString(3,  dto.getImagePath());
 
-			// isnert 문 수행하고 추가된 row 의 갯수 리턴 받기
 			flag = pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -63,7 +56,7 @@ public class FileDao {
 		return flag > 0;
 	}
 	
-	public boolean update(FileDto dto) {
+	public boolean update(GalleryDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		int flag = 0;
@@ -71,25 +64,20 @@ public class FileDao {
 		try {
 			conn = new DbcpBean().getConn();
 			StringBuilder sql = new StringBuilder();
-			sql.append("update board_file");
+			sql.append("update board_gallery");
 			sql.append("   set writer = ?");
-			sql.append("     , title = ?");
-			sql.append("     , orgFileName = ?");
-			sql.append("     , saveFileName = ?");
-			sql.append("     , fileSize = ?");
+			sql.append("     , caption = ?");
+			sql.append("     , imagePath = ?");
 			sql.append(" where num = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
 
 			// ? 에 값 바인딩하기
 			pstmt.setString(1, dto.getWriter());
-			pstmt.setString(2, dto.getTitle());
-			pstmt.setString(3, dto.getOrgFileName());
-			pstmt.setString(4, dto.getSaveFileName());
-			pstmt.setLong(5,  dto.getFileSize());
-			pstmt.setInt(6,  dto.getNum());
+			pstmt.setString(2,  dto.getCaption());
+			pstmt.setString(3,  dto.getImagePath());
+			pstmt.setInt(4,  dto.getNum());
 
-			// isnert 문 수행하고 추가된 row 의 갯수 리턴 받기
 			flag = pstmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -106,8 +94,8 @@ public class FileDao {
 			}
 		}
 
-		return flag > 0;		
-	}
+		return flag > 0;
+	}	
 	
 	public boolean delete(int num) {
 		Connection conn = null;
@@ -117,44 +105,7 @@ public class FileDao {
 		try {
 			conn = new DbcpBean().getConn();
 			StringBuilder sql = new StringBuilder();
-			sql.append("delete from board_file");
-			sql.append(" where num = ?");
-
-			pstmt = conn.prepareStatement(sql.toString());
-
-			// ? 에 값 바인딩하기
-			pstmt.setInt(1, num);
-
-			// isnert 문 수행하고 추가된 row 의 갯수 리턴 받기
-			flag = pstmt.executeUpdate();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-
-				// Connection Pool 에 Connection 객체 반납하기
-				if (conn != null)
-					conn.close();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		return flag > 0;	
-	}
-	
-	// 파일 다운로드 횟수를 증가 시키는 메소드
-	public boolean addDownCount(int num) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int flag = 0;
-
-		try {
-			conn = new DbcpBean().getConn();
-			StringBuilder sql = new StringBuilder();
-			sql.append("update board_file set downCount = downCount + 1");
+			sql.append("delete from board_gallery");
 			sql.append(" where num = ?");
 
 			pstmt = conn.prepareStatement(sql.toString());
@@ -179,92 +130,87 @@ public class FileDao {
 		}
 
 		return flag > 0;
-	}
-		
-	public FileDto getData(int num) {
+	}	
+	
+	public GalleryDto getData(int num) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		FileDto dto = null;
+			
+		// select 된 결과를 담을 지역변수 만들기
+		GalleryDto dto = null;
 		
 		try {
 			conn = new DbcpBean().getConn();
 			
 			// 실행할 select 문
 			StringBuilder sql = new StringBuilder();
-			sql.append("select num, writer, title, orgFileName, saveFileName, fileSize, downCount");
-			sql.append("     , to_char(regdate, 'yyyy/mm/dd am HH:mi') as regdate");
-			sql.append("  from board_file");
+			sql.append("select writer, caption, imagePath");
+			sql.append("     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate");
+			sql.append("  from board_gallery");
 			sql.append(" where num = ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, num);
-			
 			rs = pstmt.executeQuery();
 			
 			// 반복문 돌면서 ResultSet에 있는 내용 추출
 			if(rs.next()) {
-				dto = new FileDto();
+				dto = new GalleryDto();
+				
 				dto.setNum(num);
 				dto.setWriter(rs.getString("writer"));
-				dto.setTitle(rs.getString("title"));
-				dto.setOrgFileName(rs.getString("orgFileName"));
-				dto.setSaveFileName(rs.getString("saveFileName"));
-				dto.setFileSize(rs.getLong("fileSize"));
-				dto.setDownCount(rs.getInt("downCount"));
+				dto.setCaption(rs.getString("caption"));
+				dto.setImagePath(rs.getString("imagePath"));
 				dto.setRegdate(rs.getString("regdate"));
 			}
 		}catch(Exception ex) {
 			ex.printStackTrace();
-			dto = null;
 		} finally {
 			try {
 				if(rs != null) rs.close();
 				if(pstmt != null) pstmt.close();
 				
 				// Connection Pool 에 Connection 객체 반납하기
-				if(conn != null) conn.close();
+					if(conn != null) conn.close();
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 		
-		return dto;		
+		return dto;
 	}
 	
-	public List<FileDto> getList() {
+	public List<GalleryDto> getList() {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+			
 		// select 된 결과를 담을 지역변수 만들기
-		List<FileDto> lists = new ArrayList<>();
+		List<GalleryDto> lists = new ArrayList<>();
 		
 		try {
 			conn = new DbcpBean().getConn();
 			
 			// 실행할 select 문
 			StringBuilder sql = new StringBuilder();
-			sql.append("select num, writer, title, orgFileName, saveFileName, fileSize, downCount");
-			sql.append("     , to_char(regdate, 'yyyy/mm/dd am HH:mi') as regdate");
-			sql.append("  from board_file");
-			sql.append(" order by num desc");
+			sql.append("select num, writer, caption, imagePath");
+			sql.append("     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate");
+			sql.append("  from board_gallery");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			
 			// 반복문 돌면서 ResultSet에 있는 내용 추출
 			while(rs.next()) {
-				FileDto dto = new FileDto();
+				GalleryDto dto = new GalleryDto();
+				
 				dto.setNum(rs.getInt("num"));
 				dto.setWriter(rs.getString("writer"));
-				dto.setTitle(rs.getString("title"));
-				dto.setOrgFileName(rs.getString("orgFileName"));
-				dto.setSaveFileName(rs.getString("saveFileName"));
-				dto.setFileSize(rs.getLong("fileSize"));
-				dto.setDownCount(rs.getInt("downCount"));
+				dto.setCaption(rs.getString("caption"));
+				dto.setImagePath(rs.getString("imagePath"));
 				dto.setRegdate(rs.getString("regdate"));
-				// ArrayList 객체에 BoardDto 객체 누적 시키기
+				
 				lists.add(dto);
 			}
 		}catch(Exception ex) {
@@ -275,12 +221,12 @@ public class FileDao {
 				if(pstmt != null) pstmt.close();
 				
 				// Connection Pool 에 Connection 객체 반납하기
-				if(conn != null) conn.close();
+					if(conn != null) conn.close();
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
 		}
 		
-		return lists;
+		return lists;		
 	}
 }

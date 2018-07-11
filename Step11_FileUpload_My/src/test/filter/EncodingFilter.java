@@ -9,6 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/*
+ * EncodingFilter 는 post 방식 파라메터 전송했을떄
+ * 한글이 깨지지 않도록 인코딩 설정을 자동으로 해주는 역활을 한단.
+ * 
+ * 필터의 동작 맵핑은 WEB-INF/web.xml 문서에 되어 있다.
+ * 
+ */
 public class EncodingFilter implements Filter{
 	// 필드
 	private String encoding;
