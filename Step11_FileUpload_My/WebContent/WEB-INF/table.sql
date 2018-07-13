@@ -5,6 +5,7 @@ title VARCHAR2(100),					-- 제목
 content clob,
 regdate default SYSDATE
 )
+CREATE SEQUENCE board_guest_seq;
 
 CREATE TABLE board_file(
 num NUMBER PRIMARY KEY,  			-- 파일번호
