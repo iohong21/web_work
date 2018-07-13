@@ -1,3 +1,11 @@
+CREATE TABLE board_guest(
+num NUMBER PRIMARY KEY,  			-- 파일번호
+writer VARCHAR2(100),					-- 작성자
+title VARCHAR2(100),					-- 제목
+content clob,
+regdate default SYSDATE
+)
+
 CREATE TABLE board_file(
 num NUMBER PRIMARY KEY,  			-- 파일번호
 writer VARCHAR2(100),					-- 작성자
