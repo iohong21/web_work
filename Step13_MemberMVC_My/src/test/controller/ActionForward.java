@@ -1,7 +1,5 @@
 package test.controller;
 
-import javax.servlet.http.HttpServlet;
-
 /*
  * 비즈니스 로직 처리후 이동할 경로 정보와 
  * 리다이텍트 이동할지에 대한 여부를 저장할 객체

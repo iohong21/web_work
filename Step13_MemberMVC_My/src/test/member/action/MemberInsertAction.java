@@ -21,19 +21,21 @@ public class MemberInsertAction extends Action{
 		dto.setName(name);
 		dto.setAddr(addr);
 		
-		// MemberDao 객체를 이용해서 DB 에 저장
-		boolean isSuccess = MemberDao.getInstance().insert(dto);
-		
-		if(isSuccess) {
-			request.setAttribute("msg", "저장 했습니다.");
-			request.setAttribute("url", "/member/list.do");
-		} else {
-			request.setAttribute("msg", "실패 했습니다.");
-			request.setAttribute("url", "/member/private/insertform.jsp");
-		}
-		
-		ActionForward af = new ActionForward("/views/member/alert.jsp");
-		
-		return af;
+		MemberDao.getInstance().insert(dto);
+//		// MemberDao 객체를 이용해서 DB 에 저장
+//		boolean isSuccess = MemberDao.getInstance().insert(dto);
+//		
+//		if(isSuccess) {
+//			request.setAttribute("msg", "저장 했습니다.");
+//			request.setAttribute("url", "/member/list.do");
+//		} else {
+//			request.setAttribute("msg", "실패 했습니다.");
+//			request.setAttribute("url", "/member/private/insertform.jsp");
+//		}
+//		
+//		ActionForward af = new ActionForward("/views/member/alert.jsp");
+//		
+//		return af;
+		return new ActionForward("/member/list.do", true);
 	}
 }

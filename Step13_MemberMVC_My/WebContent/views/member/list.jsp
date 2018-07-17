@@ -15,7 +15,8 @@
 				List<MemberDto> list = (List<MemberDto>)request.getAttribute("list");
 		%>
 		<div class="container">
-			<a href="insertform.do">회원 추가</a>
+			<br />
+			<a href="insertform.do">회원 추가&nbsp;<i class="glyphicon glyphicon-plus"></i></a>
 			<h3 class="text-center">회원 목록 입니다.</h3>
 			<table class="table table-bordered">
 				<thead>
@@ -34,11 +35,23 @@
 							<td><%=dto.getName() %></td>
 							<td><%=dto.getAddr() %></td>
 							<td><a href="updateform.do?num=<%=dto.getNum() %>">수정</a></td>
-							<td><a href="delete.do?num=<%=dto.getNum() %>">삭제</a></td>
+							<td><a href="javascript:deleteConfirm(<%=dto.getNum() %>)">삭제</a></td>
 						</tr>
 					<%} %>
 				</tbody>
 			</table>
+			<%-- 
+			<a href="../home.do">home2</a>
+			--%>
+			<a href="<%=request.getContextPath() %>/home.do">home</a>
 		</div>
+		<script>
+			function deleteConfirm(num) {
+				var isDelete = confirm(num + " 번 파일을 삭제 하시겠습니까?");
+				if(isDelete) {
+					location.href = "delete.do?num="+num;
+				}
+			}
+		</script>
 	</body>
 </html>

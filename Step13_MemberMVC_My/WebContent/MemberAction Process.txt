@@ -2,12 +2,14 @@
    요청 경로 파싱
    http://localhost:8888/Step13_memberMVC_My/member/list.do 에서 member/list 추출 
    2. UserActionFactory 
-      3. MemberListAction 
-         /views/member/list.jsp 경로로 ActionForwar 호출
-         4. ActionForward 
-               요청 경로 저장 (/views/member/list.jsp)
-   5. ActionServlet 에서 MemberListAction의 Excute 실행. 인자 ( request, response )
+      3. MemberListAction
+         // 액션 객체 얻어옴 
+   4. ActionServlet 에서 MemberListAction의 Excute 실행. 인자 ( request, response )
+      5. ActionForward 
+           요청 경로 저장 (/views/member/list.jsp)
    6. ActionForward 에 저장된 isRedirect 가 true 면 
       sendRedirect 실행
       아니면 
       forward 실행 
+      
+여기서는 isRedirect를 저장하는 코드가 없으므로 forward 실행      
