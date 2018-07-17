@@ -3,7 +3,7 @@ num NUMBER PRIMARY KEY,  			-- 파일번호
 writer VARCHAR2(100),					-- 작성자
 title VARCHAR2(100),					-- 제목
 content clob,
-regdate default SYSDATE
+regdate DATE DEFAULT SYSDATE
 )
 CREATE SEQUENCE board_guest_seq;
 
@@ -15,9 +15,8 @@ orgFileName VARCHAR2(100),		-- 원본파일명
 saveFileName VARCHAR2(100),		-- 파일 시스템에 저장된 파일명
 fileSize NUMBER, 							-- 파일의 크기
 downCount NUMBER DEFAULT 0,		-- 다운로드 횟수
-regdate DATE
+regdate DATE DEFAULT SYSDATE
 );
-
 CREATE SEQUENCE board_file_seq;
 
 
@@ -26,7 +25,20 @@ num NUMBER PRIMARY KEY,
 writer VARCHAR2(100),
 caption VARCHAR2(200),
 imagePath VARCHAR2(100),
-regdate DATE
+regdate DATE DEFAULT SYSDATE
 );
-
 CREATE SEQUENCE board_gallery_seq;
+
+CREATE TABLE member(
+num NUMBER PRIMARY KEY,
+name VARCHAR2(20),
+addr VARCHAR2(20)
+);
+CREATE SEQUENCE member_seq;
+
+CREATE TABLE users(
+id VARCHAR2(100) PRIMARY KEY,
+pwd VARCHAR2(100) NOT NULL,
+email VARCHAR2(100),
+regdate DATE DEFAULT SYSDATE
+);
