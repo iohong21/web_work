@@ -34,6 +34,5 @@
 		<p>${markup }</p>
 		<p><c:out value="${markup }" escapeXml="true" /></p>
 		<p><code><c:out value="${markup }" escapeXml="true" /></code></p>
-		
 	</body>
 </html>

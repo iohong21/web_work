@@ -9,12 +9,15 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
 	</head>
 	<body>
+		<%-- 
 		<%
 				MemberDto dto = (MemberDto)request.getAttribute("dto");
 		%>
+		--%>
 		<div class="container">
 			<h3>회원 정보 수정</h3>
 			<form action="update.do" method="post">
+				<%-- 
 				<input type="hidden" name="num" id="num" value="<%=dto.getNum() %>" />
 				<label for="num">번호: </label>
 				<input type="text" value="<%=dto.getNum() %>" disabled="disable"/>
@@ -22,6 +25,15 @@
 				<input type="text" name="name" id="name" value="<%=dto.getName() %>" />
 				<label for="addr">주소: </label>
 				<input type="text" name="addr" id="addr" value="<%=dto.getAddr() %>"/>
+				--%>
+				<input type="hidden" name="num" id="num" value="${dto.num }" />
+				<label for="num">번호: </label>
+				<input type="text" value="${dto.num }" disabled="disable"/>
+				<label for="name">성명: </label>
+				<input type="text" name="name" id="name" value="${dto.name }" />
+				<label for="addr">주소: </label>
+				<input type="text" name="addr" id="addr" value="${dto.addr }"/>
+				
 				<button type="submit">수정확인</button>
 			</form>
 		</div>

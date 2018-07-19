@@ -13,6 +13,7 @@ public class MemberUpdateFormAction extends Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		int num = Integer.parseInt(request.getParameter("num"));
+		
 		MemberDto dto = MemberDao.getInstance().getData(num);
 		request.setAttribute("dto", dto);
 		
