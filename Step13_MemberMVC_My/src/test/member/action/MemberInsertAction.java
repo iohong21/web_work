@@ -22,6 +22,7 @@ public class MemberInsertAction extends Action{
 		dto.setAddr(addr);
 		
 		MemberDao.getInstance().insert(dto);
+		return new ActionForward("/member/list.do", true);
 //		// MemberDao 객체를 이용해서 DB 에 저장
 //		boolean isSuccess = MemberDao.getInstance().insert(dto);
 //		
@@ -36,6 +37,5 @@ public class MemberInsertAction extends Action{
 //		ActionForward af = new ActionForward("/views/member/alert.jsp");
 //		
 //		return af;
-		return new ActionForward("/member/list.do", true);
 	}
 }
