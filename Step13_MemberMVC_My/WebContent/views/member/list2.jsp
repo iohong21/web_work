@@ -2,7 +2,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,6 +10,10 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css" />
 	</head>
 	<body>
+		<%
+				// 
+				List<MemberDto> list = (List<MemberDto>)request.getAttribute("list");
+		%>
 		<div class="container">
 			<br />
 			<a href="insertform.do">회원 추가&nbsp;<i class="glyphicon glyphicon-plus"></i></a>
@@ -26,18 +29,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="dto" items="${list }" >
+					<%for(MemberDto dto : list) {%>
 						<tr>
-							<td>${dto.num }</td>
-							<td>${dto.name }</td>
-							<td>${dto.addr }</td>
-							<td><a href="updateform.do?num=${dto.num }">수정</a></td>
-							<td><a href="javascript:deleteConfirm(${dto.num })">삭제</a></td>
+							<td><%=dto.getNum() %></td>
+							<td><%=dto.getName() %></td>
+							<td><%=dto.getAddr() %></td>
+							<td><a href="updateform.do?num=<%=dto.getNum() %>">수정</a></td>
+							<td><a href="javascript:deleteConfirm(<%=dto.getNum() %>)">삭제</a></td>
 						</tr>
-					</c:forEach>
+					<%} %>
 				</tbody>
 			</table>
-			<a href="${pageContext.request.contextPath }/home.do">home</a>
+			<%-- 
+			<a href="../home.do">home2</a>
+			--%>
+			<a href="<%=request.getContextPath() %>/home.do">home</a>
 		</div>
 		<script>
 			function deleteConfirm(num) {
