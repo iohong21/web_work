@@ -2,11 +2,15 @@ package test.controller;
 
 import test.action.HomeAction;
 import test.users.action.CheckIdAction;
+import test.users.action.UsersInfoAction;
 import test.users.action.LoginAction;
 import test.users.action.LoginFormAction;
 import test.users.action.LogoutAction;
 import test.users.action.SignupAction;
 import test.users.action.SignupFormAction;
+import test.users.action.UsersDeleteAction;
+import test.users.action.UsersUpdateAction;
+import test.users.action.UsersUpdateFormAction;
 
 public class UserActionFactory {
 	private static UserActionFactory factory;
@@ -33,6 +37,10 @@ public class UserActionFactory {
 			case "/users/loginform": action = new LoginFormAction(); break;
 			case "/users/login": action = new LoginAction(); break;
 			case "/users/logout": action = new LogoutAction(); break;
+			case "/users/private/info": action = new UsersInfoAction(); break;
+			case "/users/private/updateform": action = new UsersUpdateFormAction(); break;
+			case "/users/private/update": action = new UsersUpdateAction(); break;
+			case "/users/private/delete": action = new UsersDeleteAction(); break;
 		}
 		
 		return action;
