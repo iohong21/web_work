@@ -1,7 +1,10 @@
 package test.controller;
 
 import test.action.HomeAction;
+import test.cafe.action.CafeInsertAction;
+import test.cafe.action.CafeInsertFormAction;
 import test.cafe.action.CafeListAction;
+import test.cafe.action.CafeListDetailAction;
 import test.file.action.FileDeleteAction;
 import test.file.action.FileDownloadAction;
 import test.file.action.FileListAction;
@@ -73,6 +76,9 @@ public class UserActionFactory {
 		case "/file/private/delete": action = new FileDeleteAction(); break;
 		
 		case "/cafe/list": action = new CafeListAction(); break;
+		case "/cafe/private/insertform": action = new CafeInsertFormAction(); break;
+		case "/cafe/private/insert": action = new CafeInsertAction(); break;
+		case "/cafe/listdetail": action = new CafeListDetailAction(); break;
 		
 		}
 

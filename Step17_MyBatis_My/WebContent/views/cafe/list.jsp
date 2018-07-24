@@ -56,7 +56,7 @@
 						<tr>
 							<td>${dto.num }</td>
 							<td>${dto.writer }</td>
-							<td>${dto.title }</td>
+							<td><a href="listdetail.do?num=${dto.num }">${dto.title }</a></td>
 							<td>${dto.viewCount }</td>
 							<td>${dto.regdate }</td>
 							<td>
