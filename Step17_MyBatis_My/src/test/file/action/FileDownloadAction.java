@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.file.dao.FileDao;
-import test.file.dto.FileDto;
+import test.dao.FileDao;
+import test.dto.FileDto;
 
 public class FileDownloadAction extends Action{
 	@Override

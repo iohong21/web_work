@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 
 //2. 
-@WebFilter({"/users/private/*", "/member/private/*", "/file/private/*"})
+@WebFilter({"/users/private/*", "/member/private/*", "/file/private/*", "/cafe/private/*"})
 public class LoginFilter implements Filter{	//1.
 	@Override
 	public void destroy() {

@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.member.dao.MemberDao;
-import test.member.dto.MemberDto;
+import test.dao.MemberDao;
+import test.dto.MemberDto;
 
 /*
  * 폼 전송되는 파라미터를 추출해서 DB 에 저장하는 Action

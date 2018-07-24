@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.users.dao.UsersDao;
+import test.dao.UsersDao;
 
 /*
  * UserActionFactory 에 명시할

@@ -3,8 +3,8 @@
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.MultipartResponse"%>
-<%@page import="test.file.dao.FileDao"%>
-<%@page import="test.file.dto.FileDto"%>
+<%@page import="test.dao.FileDao"%>
+<%@page import="test.dto.FileDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

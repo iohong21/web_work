@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.users.dao.UsersDao;
+import test.dao.UsersDao;
 
 public class UsersDeleteAction extends Action{
 	@Override

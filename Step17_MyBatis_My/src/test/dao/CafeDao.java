@@ -1,4 +1,4 @@
-package test.file.dao;
+package test.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,30 +6,29 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import test.file.dto.FileDto;
+import test.dto.CafeDto;
 import test.mybatis.SqlMapConfig;
 
-public class FileDao {
-	private static FileDao dao = null;
+public class CafeDao {
+	private static CafeDao dao = null;
 	private static SqlSessionFactory factory;
 	
-	private FileDao() {}
-	public static FileDao getInstance() {
+	private CafeDao() {}
+	public static CafeDao getInstance() {
 		if(dao == null) {
-			dao = new FileDao();
+			dao = new CafeDao();
 			factory = SqlMapConfig.getSqlSession();
 		}
 		
 		return dao;
 	}
 	
-	// 파일 정보를 저장하는 메소드
-	public boolean insert(FileDto dto) {
+	public boolean insert(CafeDto dto) {
 		SqlSession session = null;
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("file.insert", dto);
+			flag = session.insert("cafe.insert", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -39,12 +38,13 @@ public class FileDao {
 		return flag > 0;
 	}
 	
-	public boolean update(FileDto dto) {
+	
+	public boolean update(CafeDto dto) {
 		SqlSession session = null;
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("file.update", dto);
+			flag = session.insert("cafe.update", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -59,7 +59,7 @@ public class FileDao {
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("file.delete", num);
+			flag = session.insert("cafe.delete", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -75,7 +75,7 @@ public class FileDao {
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("file.addDownCount", num);
+			flag = session.insert("cafe.addDownCount", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -85,12 +85,12 @@ public class FileDao {
 		return flag > 0;		
 	}
 		
-	public FileDto getData(int num) {
+	public CafeDto getData(int num) {
 		SqlSession session = null;
-		FileDto dto = null;
+		CafeDto dto = null;
 		try {
 			session = factory.openSession();
-			dto = session.selectOne("file.getData", num);
+			dto = session.selectOne("cafe.getData", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -100,12 +100,12 @@ public class FileDao {
 		return dto;
 	}
 	
-	public List<FileDto> getList() {
+	public List<CafeDto> getList() {
 		SqlSession session = null;
-		List<FileDto> dto = new ArrayList<>();
+		List<CafeDto> dto = new ArrayList<>();
 		try {
 			session = factory.openSession();
-			dto = session.selectList("file.getList", dto);
+			dto = session.selectList("cafe.getList", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -115,12 +115,12 @@ public class FileDao {
 		return dto;
 	}
 	
-	public List<FileDto> getListPage(FileDto dto) {
+	public List<CafeDto> getListPage(CafeDto dto) {
 		SqlSession session = null;
-		List<FileDto> list = new ArrayList<>();
+		List<CafeDto> list = new ArrayList<>();
 		try {
 			session = factory.openSession();
-			list = session.selectList("file.getListPage", dto);
+			list = session.selectList("cafe.getListPage", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -136,7 +136,7 @@ public class FileDao {
 		int count = 0;
 		try {
 			session = factory.openSession();
-			count = session.selectOne("file.getCount");
+			count = session.selectOne("cafe.getCount");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -144,5 +144,5 @@ public class FileDao {
 		}
 		
 		return count;
-	}
+	}	
 }

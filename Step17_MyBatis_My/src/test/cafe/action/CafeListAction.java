@@ -1,4 +1,4 @@
-package test.file.action;
+package test.cafe.action;
 
 import java.util.List;
 
@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
+import test.dao.CafeDao;
 import test.dao.FileDao;
+import test.dto.CafeDto;
 import test.dto.FileDto;
 
-public class FileListAction extends Action{
+public class CafeListAction extends Action{
 	private static final int PAGE_ROW_COUNT = 5;
 	private static final int PAGE_DISPLAY_COUNT = 3;
 	
@@ -44,10 +46,10 @@ public class FileListAction extends Action{
 		}
 		
 		//1. 파일 목록을 불러와서
-		FileDto dto = new FileDto();
+		CafeDto dto = new CafeDto();
 		dto.setStartRowNum(startRowNum);
 		dto.setEndRowNum(endRowNum);
-		List<FileDto> list=FileDao.getInstance().getListPage(dto);
+		List<CafeDto> list=CafeDao.getInstance().getListPage(dto);
 		//2. request 에 담고
 		request.setAttribute("list", list);
 		
@@ -57,7 +59,6 @@ public class FileListAction extends Action{
 		request.setAttribute("endPageNum", endPageNum);
 		request.setAttribute("totalPageCount", totalPageCount);
 		
-		//3. view 페이지로 forward 이동
-		return new ActionForward("/views/file/list.jsp");
+		return new ActionForward("/views/cafe/list.jsp");
 	}
 }

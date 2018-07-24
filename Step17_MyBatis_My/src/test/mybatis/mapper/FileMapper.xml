@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
-	<insert id="insert" parameterType="test.file.dto.FileDto">
+	<!-- 자주 사용하는 sql 문을 미리 정의해 놓기 -->
+	<sql id="fileColumn">
+		num, writer, title, orgFileName, saveFileName, fileSize, downCount
+				     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate	
+	</sql>
+
+	<insert id="insert" parameterType="fileDto">
 		INSERT INTO board_file(num, writer, title, orgFileName, saveFileName, fileSize, regdate) 
 		VALUES  (board_file_seq.nextval, #{writer}, #{title}, #{orgFileName}, #{saveFileName}, #{fileSize}, SYSDATE)
 	</insert>
 	
-	<update id="update" parameterType="test.file.dto.FileDto">
+	<update id="update" parameterType="fileDto">
 		UPDATE board_file
 		   SET writer = #{writer}
 		     , title = #{title}
@@ -27,25 +33,22 @@
 	   WHERE num = #{num} 
 	</delete>
 		
-	<select id="getData" parameterType="int" resultType="test.file.dto.FileDto">
-		SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
-		     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+	<select id="getData" parameterType="int" resultType="fileDto">
+		SELECT <include refid="fileColumn" />
 		  FROM board_file
 		 WHERE num = #{num}
 	</select>
 	
-	<select id="getList" resultType="test.file.dto.FileDto">
-		SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
-		     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+	<select id="getList" resultType="fileDto">
+		SELECT <include refid="fileColumn" />
 		  FROM board_file
 		 ORDER BY num DESC
 	</select>
 	
-	<select id="getListPage" resultType="test.file.dto.FileDto">
+	<select id="getListPage" resultType="fileDto">
 		SELECT *
 			FROM (SELECT result1.*, ROWNUM rnum 
-						  FROM (SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
-									       , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+						  FROM (SELECT <include refid="fileColumn" />
 									    FROM board_file
 									   ORDER BY num DESC) result1 
 					 )

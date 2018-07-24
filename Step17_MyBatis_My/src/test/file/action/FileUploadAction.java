@@ -9,8 +9,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.file.dao.FileDao;
-import test.file.dto.FileDto;
+import test.dao.FileDao;
+import test.dto.FileDto;
 
 public class FileUploadAction extends Action{
 	@Override

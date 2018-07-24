@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.member.dao.MemberDao;
-import test.member.dto.MemberDto;
+import test.dao.MemberDao;
+import test.dto.MemberDto;
 
 // 회원 목록 보기 요청을 처리할 액션 클래스
 public class MemberListAction extends Action{

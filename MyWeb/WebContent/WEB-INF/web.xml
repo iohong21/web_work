@@ -32,4 +32,14 @@
 	 <res-type>javax.sql.DataSource</res-type>
 	 <res-auth>Container</res-auth>
 	</resource-ref>    
+	
+	<!--
+		<c:redirect url="/home.do" /> 이것을 실행하면
+		주소창에 http://localhost/home.do;jsessionid=457345319574  등과 같이 되는데
+		뒤의  ;jsessionid=xxxx 는 없어야 하는 부분이다.
+		;jsessionid=xxxx 을 없애는 방법이 아래의 session-config 를 설정하면 된다.
+	-->
+	<session-config>
+	    <tracking-mode>COOKIE</tracking-mode>
+	</session-config>	
 </web-app>

@@ -1,4 +1,4 @@
-<%@page import="test.member.dto.MemberDto"%>
+<%@page import="test.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.member.dao.MemberDao;
+import test.dao.MemberDao;
 
 public class MemberDeleteAction extends Action {
 	@Override

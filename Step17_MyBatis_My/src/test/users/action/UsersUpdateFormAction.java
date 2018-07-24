@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.users.dao.UsersDao;
-import test.users.dto.UsersDto;
+import test.dao.UsersDao;
+import test.dto.UsersDto;
 
 public class UsersUpdateFormAction extends Action {
 	@Override

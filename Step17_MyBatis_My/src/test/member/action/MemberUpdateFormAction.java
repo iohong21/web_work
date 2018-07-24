@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
-import test.member.dao.MemberDao;
-import test.member.dto.MemberDto;
+import test.dao.MemberDao;
+import test.dto.MemberDto;
 
 public class MemberUpdateFormAction extends Action{
 	@Override

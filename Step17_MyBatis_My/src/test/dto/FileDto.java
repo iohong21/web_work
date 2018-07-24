@@ -1,4 +1,4 @@
-package test.file.dto;
+package test.dto;
 
 public class FileDto {
 	private int num;				// 파일번호

@@ -1,4 +1,4 @@
-package test.users.dto;
+package test.dto;
 
 public class UsersDto {
 	private String id;

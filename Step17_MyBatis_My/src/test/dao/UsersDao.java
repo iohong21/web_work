@@ -1,4 +1,4 @@
-package test.users.dao;
+package test.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import test.dto.UsersDto;
 import test.mybatis.SqlMapConfig;
-import test.users.dto.UsersDto;
 
 public class UsersDao {
 	private static UsersDao dao = null;

@@ -1,6 +1,7 @@
 package test.controller;
 
 import test.action.HomeAction;
+import test.cafe.action.CafeListAction;
 import test.file.action.FileDeleteAction;
 import test.file.action.FileDownloadAction;
 import test.file.action.FileListAction;
@@ -40,6 +41,11 @@ public class UserActionFactory {
 		//Action 추상클래스 type 을 담을 지역변수 만들기 
 		Action action = null;
 		
+		//String packageName = this.getClass().getPackage().getName();
+		String className = this.getClass().getName();
+		String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+		System.out.format("[ %s.%s ] %s\n", className, methodName, command);
+
 		switch(command) {
 		case "/home": action = new HomeAction(); break;
 		case "/member/list": action = new MemberListAction(); break;
@@ -66,8 +72,10 @@ public class UserActionFactory {
 		case "/file/download": action = new FileDownloadAction(); break;
 		case "/file/private/delete": action = new FileDeleteAction(); break;
 		
-		}
+		case "/cafe/list": action = new CafeListAction(); break;
 		
+		}
+
 		return action;
 	}	
 }

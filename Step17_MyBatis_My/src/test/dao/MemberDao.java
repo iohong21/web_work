@@ -1,11 +1,11 @@
-package test.member.dao;
+package test.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import test.member.dto.MemberDto;
+import test.dto.MemberDto;
 import test.mybatis.SqlMapConfig;
 
 public class MemberDao {
