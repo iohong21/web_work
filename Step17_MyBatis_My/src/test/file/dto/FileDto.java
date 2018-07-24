@@ -12,10 +12,11 @@ public class FileDto {
 	// 페이징 처리 할떄 필요한 값
 	private int startRowNum;
 	private int endRowNum;
+	private int rnum;
 
 	public FileDto() {}
 	public FileDto(int num, String writer, String title, String orgFileName, String saveFileName, long fileSize,
-			int downCount, String regdate, int startRowNum, int endRowNum) {
+			int downCount, String regdate, int startRowNum, int endRowNum, int rnum) {
 		this.num = num;
 		this.writer = writer;
 		this.title = title;
@@ -26,6 +27,7 @@ public class FileDto {
 		this.regdate = regdate;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
+		this.rnum = rnum;
 	}
 	public int getNum() {
 		return num;
@@ -87,6 +89,12 @@ public class FileDto {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}	
+	public int getRNum() {
+		return rnum;
+	}
+	public void setRNum(int rnum) {
+		this.rnum = rnum;
+	}	
 
 	public Object[] toArray() {
 		return new Object[] {
@@ -99,7 +107,8 @@ public class FileDto {
 				downCount,
 				regdate,
 				startRowNum,
-				endRowNum
+				endRowNum,
+				rnum
 		};
 	}	
 }
