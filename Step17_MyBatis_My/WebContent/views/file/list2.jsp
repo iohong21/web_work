@@ -76,48 +76,61 @@
 			</table>
 			
 			<!-- 페이징 처리 -->
-			<nav class="text-center" aria-label="...">
-				 <ul class="pagination">
-				 	<c:choose>
-				 		<c:when test="${startPageNum ne 1 }">
-						 	<li class="page-item">
-		      			<a class="page-link" href="list.do?pageNum=${startPageNum-1}">&laquo;<span class="sr-only">Previous</span></a>
-		    			</li>
-				 		</c:when>
-				 		<c:otherwise>
-						 	<li class="page-item  disabled">
-		      			<a class="page-link" href="javascript:">&laquo;<span class="sr-only">Previous</span></a>
-		    			</li>
-				 		</c:otherwise>
-				 	</c:choose>
-				 	
-					<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }" step="1">
-						<c:choose>
-							<c:when test="${i eq pageNum }">
-								<li class="page-item active">
-						      <a class="page-link" href="list.do?pageNum=${i }">${i } <span class="sr-only">(current)</span></a>
-						    </li>								
-							</c:when>
-							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="list.do?pageNum=${i }">${i }</a></li>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>				 	
-				 	
+			<div class="page_display text-center">
+				<c:choose>
+					<c:when test="${startPageNum ne 1 }">
+						<a class="fontSize20" href="list.do?pageNum=${startPageNum-1}">Prev&nbsp;&nbsp;</a>
+					</c:when>
+					<c:otherwise>
+						<a class="muted fontSize20" href="javascript:">Prev&nbsp;&nbsp;</a>
+					</c:otherwise>
+				</c:choose>
+			
+				<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }" step="1">
 					<c:choose>
-						<c:when test="${endPageNum lt totalPageCount }">
-							<li class="page-item">
-					      <a class="page-link" href="list.do?pageNum=${endPageNum+1}">&raquo;<span class="sr-only">Next</span></a>
-					    </li>				 	
+						<c:when test="${i eq pageNum }">
+							<a class="active" href="list.do?pageNum=${i }">${i }</a>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled">
-					      <a class="page-link" href="javascript:">&raquo;<span class="sr-only">Next</span></a>
-					    </li>				 	
+							<a href="list.do?pageNum=${i }">${i }</a>
 						</c:otherwise>
 					</c:choose>
-				 </ul>
-			</nav>
+					&nbsp;&nbsp;
+				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${endPageNum lt totalPageCount }">
+						<a class="fontSize20" href="list.do?pageNum=${endPageNum+1}">Next&nbsp;&nbsp;</a>
+					</c:when>
+					<c:otherwise>
+						<a class="muted fontSize20" href="javascript:">Next&nbsp;&nbsp;</a>
+					</c:otherwise>
+				</c:choose>
+				
+			</div>
+			
+			<!-- 
+			<p class="text-center">
+				<c:set var="snum" value="1" />
+				<c:if test="${startPageNum ne snum }">
+					<a href="list.do?pageNum=${startPageNum-1}"><span style="font-size: 20px">&lt;</span>&nbsp;&nbsp;</a>
+				</c:if>
+				<c:forEach var="page" begin="${startPageNum }" end="${endPageNum }" step="1">
+					<c:choose>
+						<c:when test="${page eq pageNum }">
+							<span style="color: red; font-size: 20px">${page }</span>
+						</c:when>
+						<c:otherwise>
+							<a href="list.do?pageNum=${page }"><span style="font-size: 20px">${page }</span></a>
+						</c:otherwise>
+					</c:choose>
+					&nbsp;&nbsp;
+				</c:forEach>
+				<c:if test="${endPageNum ne totalPageCount }">
+					<a href="list.do?pageNum=${endPageNum+1}"><span style="font-size: 20px">&gt;</span></a>
+				</c:if>
+			</p>
+			 -->
 		</div>
 		<p id="deleteInfo"></p>
 		<script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.js"></script>

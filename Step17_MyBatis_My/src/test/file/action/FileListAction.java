@@ -50,10 +50,12 @@ public class FileListAction extends Action{
 		List<FileDto> list=FileDao.getInstance().getListPage(dto);
 		//2. request 에 담고
 		request.setAttribute("list", list);
+		
+		// 페이징 처리에 관련된 값도 request 에 담기
 		request.setAttribute("pageNum", pageNum);
-		request.setAttribute("totalPageCount", totalPageCount);
 		request.setAttribute("startPageNum", startPageNum);
 		request.setAttribute("endPageNum", endPageNum);
+		request.setAttribute("totalPageCount", totalPageCount);
 		
 		//3. view 페이지로 forward 이동
 		return new ActionForward("/views/file/list.jsp");
