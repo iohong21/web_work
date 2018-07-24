@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+	<insert id="insert" parameterType="test.file.dto.FileDto">
+		INSERT INTO board_file(num, writer, title, orgFileName, saveFileName, fileSize, regdate) 
+		VALUES  (board_file_seq.nextval, #{writer}, #{title}, #{orgFileName}, #{saveFileName}, #{fileSize}, SYSDATE)
+	</insert>
+	
+	<update id="update" parameterType="test.file.dto.FileDto">
+		UPDATE board_file
+		   SET writer = #{writer}
+		     , title = #{title}
+		     , orgFileName = #{orgFileName}
+		     , saveFileName = #{saveFileName}
+		     , fileSize = #{fileSize}
+		 WHERE num = #{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM board_file
+	   WHERE num = #{num} 
+	</delete>
+	
+	<delete id="addDownCount" parameterType="int">
+		UPDATE board_file
+		   SET downCount = downCount + 1
+	   WHERE num = #{num} 
+	</delete>
+		
+	<select id="getData" parameterType="int" resultType="test.file.dto.FileDto">
+		SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
+		     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+		  FROM board_file
+		 WHERE num = #{num}
+	</select>
+	
+	<select id="getList" resultType="test.file.dto.FileDto">
+		SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
+		     , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+		  FROM board_file
+		 ORDER BY num DESC
+	</select>
+	
+	<select id="getListPage" resultType="test.file.dto.FileDto">
+		SELECT *
+			FROM (SELECT X.*, ROWNUM rnum 
+						  FROM (SELECT num, writer, title, orgFileName, saveFileName, fileSize, downCount
+									       , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+									    FROM board_file
+									   ORDER BY num DESC) X )
+		 WHERE rnum between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT count(*)
+		  FROM board_file
+	</select>
+	
+</mapper>
