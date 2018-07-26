@@ -1,11 +1,15 @@
 package test.cafe.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import test.controller.Action;
 import test.controller.ActionForward;
+import test.dao.CafeCommentDao;
 import test.dao.CafeDao;
+import test.dto.CafeCommentDto;
 import test.dto.CafeDto;
 
 /*
@@ -18,6 +22,13 @@ public class CafeDetailAction extends Action{
 		
 		String keyword = request.getParameter("keyword");
 		String condition = request.getParameter("condition");
+		
+		int pageNum = 1;
+		String strPageNum = request.getParameter("pageNum");
+		if(strPageNum != null) {
+			pageNum = Integer.parseInt(strPageNum);
+		}
+		
 		
 		CafeDto dto = new CafeDto();
 		if(keyword != null) { // 검색어가 전달된 경우
@@ -40,6 +51,16 @@ public class CafeDetailAction extends Action{
 		CafeDao.getInstance().addViewCount(num);
 		
 		request.setAttribute("dto", resultDto);
+		request.setAttribute("pageNum", pageNum);
+		
+		// 로그인 여부 확인해서 request 에 담기
+		String id = (String)request.getSession().getAttribute("id");
+		boolean isLogin = id != null;
+		
+		List<CafeCommentDto> commentList = CafeCommentDao.getInstance().getList(num);
+		
+		request.setAttribute("commentList", commentList);
+		request.setAttribute("isLogin", isLogin);
 		
 		return new ActionForward("/views/cafe/detail.jsp");
 	}

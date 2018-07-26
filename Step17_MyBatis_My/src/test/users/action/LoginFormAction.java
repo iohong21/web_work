@@ -13,7 +13,13 @@ public class LoginFormAction extends Action{
 		if(url == null) {
 			url = request.getContextPath() + "/index.jsp";
 		}
+		
+		int pageNum = 1;
+		String strPageNum = request.getParameter("pageNum");
+		if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
+		
 		request.setAttribute("url", url);
+		request.setAttribute("pageNum", pageNum);
 		
 		return new ActionForward("/views/users/loginform.jsp");
 	}

@@ -6,6 +6,7 @@ import test.cafe.action.CafeInsertFormAction;
 import test.cafe.action.CafeListAction;
 import test.cafe.action.CafeUpdateAction;
 import test.cafe.action.CafeUpdateformAction;
+import test.cafe.action.CafeCommentInsertAction;
 import test.cafe.action.CafeDeleteAction;
 import test.cafe.action.CafeDetailAction;
 import test.file.action.FileDeleteAction;
@@ -85,6 +86,8 @@ public class UserActionFactory {
 		case "/cafe/private/delete": action = new CafeDeleteAction(); break;
 		case "/cafe/private/updateform": action = new CafeUpdateformAction(); break;
 		case "/cafe/private/update": action = new CafeUpdateAction(); break;
+		
+		case "/cafe/comment_insert": action = new CafeCommentInsertAction(); break;
 		
 		}
 

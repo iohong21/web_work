@@ -15,7 +15,7 @@
 			</c:when>
 			<c:otherwise>
 				<p>아이디 혹은 비밀번호가 틀려요.</p>
-				<a href="loginform.do?url=${url }">확인</a>
+				<a href="loginform.do?url=${url }&pageNum=${pageNum }">확인</a>
 			</c:otherwise>
 		</c:choose>
   </body>

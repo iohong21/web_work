@@ -48,6 +48,7 @@
 						<th>제목</th>
 						<th>조회수</th>
 						<th>등록일</th>
+						<th>삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -55,9 +56,14 @@
 						<tr>
 							<td>${dto.num }</td>
 							<td>${dto.writer }</td>
-							<td><a href="detail.do?num=${dto.num }&condition=${condition }&keyword=${keyword }">${dto.title }</a></td>
+							<td><a href="detail.do?num=${dto.num }&condition=${condition }&keyword=${keyword }&pageNum=${pageNum }">${dto.title }</a></td>
 							<td>${dto.viewCount }</td>
 							<td>${dto.regdate }</td>
+							<td>
+								<c:if test="${dto.writer eq id }">
+									<a href="javascript:deleteConfirm(${dto.num })">삭제</a>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -69,12 +75,18 @@
 				 	<c:choose>
 				 		<c:when test="${startPageNum ne 1 }">
 						 	<li class="page-item">
-		      			<a class="page-link" href="list.do?pageNum=${startPageNum-1}&condition=${condition }&keyword=${keyword}">&laquo;<span class="sr-only">Previous</span></a>
+		      			<a class="page-link" href="list.do?pageNum=1&condition=${condition }&keyword=${keyword}">&laquo;<span class="sr-only">Previous</span></a>
+		    			</li>
+						 	<li class="page-item">
+		      			<a class="page-link" href="list.do?pageNum=${startPageNum-1}&condition=${condition }&keyword=${keyword}">&lt;<span class="sr-only">Previous</span></a>
 		    			</li>
 				 		</c:when>
 				 		<c:otherwise>
 						 	<li class="page-item  disabled">
 		      			<a class="page-link" href="javascript:">&laquo;<span class="sr-only">Previous</span></a>
+		    			</li>
+						 	<li class="page-item  disabled">
+		      			<a class="page-link" href="javascript:">&lt;<span class="sr-only">Previous</span></a>
 		    			</li>
 				 		</c:otherwise>
 				 	</c:choose>
@@ -95,13 +107,23 @@
 					<c:choose>
 						<c:when test="${endPageNum lt totalPageCount }">
 							<li class="page-item">
-					      <a class="page-link" href="list.do?pageNum=${endPageNum+1}&condition=${condition}&keyword=${keyword}">&raquo;<span class="sr-only">Next</span></a>
+					      <a class="page-link" href="list.do?pageNum=${endPageNum+1}&condition=${condition}&keyword=${keyword}">&gt;<span class="sr-only">Next</span></a>
 					    </li>				 	
+							<li class="page-item">
+					      <a class="page-link" href="list.do?pageNum=${totalPageCount}&condition=${condition}&keyword=${keyword}">&raquo;<span class="sr-only">Next</span></a>
+					    </li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled">
-					      <a class="page-link" href="javascript:">&raquo;<span class="sr-only">Next</span></a>
-					    </li>				 	
+							<c:if test="${endPageNum ge totalPageCount }">
+								<li class="page-item disabled">
+						      <a class="page-link" href="javascript:">&gt;<span class="sr-only">Next</span></a>
+						    </li>	
+					    </c:if>			 	
+							<c:if test="${endPageNum+pageDisplayCount ge totalPageCount }">
+								<li class="page-item disabled">
+						      <a class="page-link" href="javascript:">&raquo;<span class="sr-only">Next</span></a>
+						    </li>	
+					    </c:if>			 	
 						</c:otherwise>
 					</c:choose>
 				 </ul>
@@ -126,6 +148,9 @@
 					<p><strong>${totalRow }</strong> 개의 글이 있습니다.</p>
 				</c:otherwise>
 			</c:choose>
+			
+			<br />
+			<a href="${pageContext.request.contextPath}/home.do">Home</a>
 		</div>
 		
 		<script>

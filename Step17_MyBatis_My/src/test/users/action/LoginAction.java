@@ -14,6 +14,10 @@ public class LoginAction extends Action {
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
 		
+		int pageNum = 1;
+		String strPageNum = request.getParameter("pageNum");
+		if(strPageNum != null) pageNum = Integer.parseInt(strPageNum);
+		
 		UsersDto dto = new UsersDto();
 		dto.setId(id);
 		dto.setPwd(pwd);

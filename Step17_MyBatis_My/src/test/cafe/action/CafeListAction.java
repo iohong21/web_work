@@ -14,7 +14,7 @@ import test.dto.FileDto;
 
 public class CafeListAction extends Action{
 	private static final int PAGE_ROW_COUNT = 5;
-	private static final int PAGE_DISPLAY_COUNT = 3;
+	private static final int PAGE_DISPLAY_COUNT = 2;
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -88,6 +88,7 @@ public class CafeListAction extends Action{
 		request.setAttribute("totalPageCount", totalPageCount);
 		// 전체 row 의 갯수도 전달하기
 		request.setAttribute("totalRow", totalRow);
+		request.setAttribute("pageDisplayCount", PAGE_DISPLAY_COUNT);
 		
 		
 		return new ActionForward("/views/cafe/list.jsp");
