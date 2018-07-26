@@ -8,17 +8,17 @@ import test.controller.ActionForward;
 import test.dao.CafeDao;
 import test.dto.CafeDto;
 
-public class CafeListDetailAction extends Action{
+public class CafeUpdateformAction extends Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		String id = (String)request.getSession().getAttribute("id");
 		int num = Integer.parseInt(request.getParameter("num"));
 		
-		CafeDto dto = CafeDao.getInstance().getData(num);
+		CafeDto dto = new CafeDto();
+		dto.setNum(num);
+		CafeDto resultDto = CafeDao.getInstance().getDataPrevNext(dto);
 		
-		request.setAttribute("id", id);
-		request.setAttribute("dto", dto);
+		request.setAttribute("dto", resultDto);
 		
-		return new ActionForward("/views/cafe/listdetail.jsp");
+		return new ActionForward("/views/cafe/updateform.jsp");
 	}
 }

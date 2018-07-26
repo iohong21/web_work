@@ -48,7 +48,6 @@
 						<th>제목</th>
 						<th>조회수</th>
 						<th>등록일</th>
-						<th>삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -56,14 +55,9 @@
 						<tr>
 							<td>${dto.num }</td>
 							<td>${dto.writer }</td>
-							<td><a href="listdetail.do?num=${dto.num }">${dto.title }</a></td>
+							<td><a href="detail.do?num=${dto.num }&condition=${condition }&keyword=${keyword }">${dto.title }</a></td>
 							<td>${dto.viewCount }</td>
 							<td>${dto.regdate }</td>
-							<td>
-								<c:if test="${dto.writer eq id }">
-									<a href="javascript: deleteConfirm(${dto.num });">삭제</a>
-								</c:if>
-							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -75,7 +69,7 @@
 				 	<c:choose>
 				 		<c:when test="${startPageNum ne 1 }">
 						 	<li class="page-item">
-		      			<a class="page-link" href="list.do?pageNum=${startPageNum-1}">&laquo;<span class="sr-only">Previous</span></a>
+		      			<a class="page-link" href="list.do?pageNum=${startPageNum-1}&condition=${condition }&keyword=${keyword}">&laquo;<span class="sr-only">Previous</span></a>
 		    			</li>
 				 		</c:when>
 				 		<c:otherwise>
@@ -89,11 +83,11 @@
 						<c:choose>
 							<c:when test="${i eq pageNum }">
 								<li class="page-item active">
-						      <a class="page-link" href="list.do?pageNum=${i }">${i } <span class="sr-only">(current)</span></a>
+						      <a class="page-link" href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i } <span class="sr-only">(current)</span></a>
 						    </li>								
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="list.do?pageNum=${i }">${i }</a></li>
+								<li class="page-item"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition}&keyword=${keyword}">${i }</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>				 	
@@ -101,7 +95,7 @@
 					<c:choose>
 						<c:when test="${endPageNum lt totalPageCount }">
 							<li class="page-item">
-					      <a class="page-link" href="list.do?pageNum=${endPageNum+1}">&raquo;<span class="sr-only">Next</span></a>
+					      <a class="page-link" href="list.do?pageNum=${endPageNum+1}&condition=${condition}&keyword=${keyword}">&raquo;<span class="sr-only">Next</span></a>
 					    </li>				 	
 						</c:when>
 						<c:otherwise>
@@ -112,9 +106,28 @@
 					</c:choose>
 				 </ul>
 			</nav>
+			
+			<!-- keyword 검색어 form -->
+			<form action="list.do" method="post">
+				<label for="condition">검색조건</label>
+				<select name="condition" id="condition"">
+					<option value="titlecontent" <c:if test="${condition eq 'titlecontent' }">selected</c:if>>제목+내용</option>
+					<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
+					<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
+				</select>
+				<input type="text" name="keyword" placeholder="검색어..." value="${keyword }" />
+				<button type="submit">검색</button>		
+			</form>
+			<c:choose>
+				<c:when test="${not empty keyword }">
+					<p><strong>${keyword }</strong> 검색어로 검색된<strong>${totalRow }</strong> 개의 글이 있습니다.</p>
+				</c:when>
+				<c:otherwise>
+					<p><strong>${totalRow }</strong> 개의 글이 있습니다.</p>
+				</c:otherwise>
+			</c:choose>
 		</div>
-		<p id="deleteInfo"></p>
-		<script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.js"></script>
+		
 		<script>
 			function deleteConfirm(num) {
 				var isDelete = confirm(num + "번 파일을 삭제 하시겠습니까?");

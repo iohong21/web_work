@@ -4,7 +4,10 @@ import test.action.HomeAction;
 import test.cafe.action.CafeInsertAction;
 import test.cafe.action.CafeInsertFormAction;
 import test.cafe.action.CafeListAction;
-import test.cafe.action.CafeListDetailAction;
+import test.cafe.action.CafeUpdateAction;
+import test.cafe.action.CafeUpdateformAction;
+import test.cafe.action.CafeDeleteAction;
+import test.cafe.action.CafeDetailAction;
 import test.file.action.FileDeleteAction;
 import test.file.action.FileDownloadAction;
 import test.file.action.FileListAction;
@@ -78,7 +81,10 @@ public class UserActionFactory {
 		case "/cafe/list": action = new CafeListAction(); break;
 		case "/cafe/private/insertform": action = new CafeInsertFormAction(); break;
 		case "/cafe/private/insert": action = new CafeInsertAction(); break;
-		case "/cafe/listdetail": action = new CafeListDetailAction(); break;
+		case "/cafe/detail": action = new CafeDetailAction(); break;
+		case "/cafe/private/delete": action = new CafeDeleteAction(); break;
+		case "/cafe/private/updateform": action = new CafeUpdateformAction(); break;
+		case "/cafe/private/update": action = new CafeUpdateAction(); break;
 		
 		}
 

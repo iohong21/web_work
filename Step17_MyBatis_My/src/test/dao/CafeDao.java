@@ -38,13 +38,13 @@ public class CafeDao {
 		return flag > 0;
 	}
 	
-	
+	// 글 정보를 수정하는 메소드
 	public boolean update(CafeDto dto) {
 		SqlSession session = null;
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("cafe.update", dto);
+			flag = session.update("cafe.update", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -59,7 +59,7 @@ public class CafeDao {
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("cafe.delete", num);
+			flag = session.delete("cafe.delete", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -69,20 +69,18 @@ public class CafeDao {
 		return flag > 0;		
 	}
 	
-	// 파일 다운로드 횟수를 증가 시키는 메소드
-	public boolean addDownCount(int num) {
+	// 조회수를 증가 시키는 메소드
+	public void addViewCount(int num) {
 		SqlSession session = null;
 		int flag = 0;
 		try {
 			session = factory.openSession(true);
-			flag = session.insert("cafe.addDownCount", num);
+			flag = session.update("cafe.addViewCount", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
-
-		return flag > 0;		
 	}
 		
 	public CafeDto getData(int num) {
@@ -98,6 +96,21 @@ public class CafeDao {
 		}
 		
 		return dto;
+	}
+	
+	public CafeDto getDataPrevNext(CafeDto dto) {
+		SqlSession session = null;
+		CafeDto resultDto = null;
+		try {
+			session = factory.openSession();
+			resultDto = session.selectOne("cafe.getDataPrevNext", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return resultDto;
 	}
 	
 	public List<CafeDto> getList() {
@@ -131,12 +144,12 @@ public class CafeDao {
 	}
 	
 	// 전체 row 의 갯수를 리턴한느 메소드
-	public int getCount() {
+	public int getCount(CafeDto dto) {
 		SqlSession session = null;
 		int count = 0;
 		try {
 			session = factory.openSession();
-			count = session.selectOne("cafe.getCount");
+			count = session.selectOne("cafe.getCount", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
