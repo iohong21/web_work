@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafeComment">
+	<sql id="commentColumn">
+		num, writer, content, target_id, ref_group, comment_group, to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+	</sql>
 	<insert id="insert" parameterType="CafeCommentDto" >
 		INSERT INTO board_cafe_comment(num, writer, content, target_id, ref_group, comment_group)
 		VALUES (#{num}, #{writer}, #{content}, #{target_id}, #{ref_group}, #{comment_group})
 	</insert>
 	
+	<update id="update" parameterType="CafeCommentDto">
+		UPDATE board_cafe_comment 
+		   SET content = #{content}
+		 WHERE num = #{num}
+	</update>
+		
+	
 	<select id="getSequence" resultType="int">
-		SELECT board_cafe_seq.NEXTVAl from dual
+		SELECT board_cafe_seq.NEXTVAL from dual
 	</select>
 	
 	<select id="getList" parameterType="int" resultType="cafeCommentDto">
-		SELECT num, writer, content, target_id, ref_group, comment_group
-				 , to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+		SELECT <include refid="commentColumn" />
 			FROM board_cafe_comment
 		 WHERE ref_group = #{ref_group}
-		 ORDER BY comment_group, num
+		 ORDER BY comment_group ASC, num ASC
 	</select>
 </mapper>

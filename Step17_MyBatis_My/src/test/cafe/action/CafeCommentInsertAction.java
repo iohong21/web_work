@@ -34,5 +34,6 @@ public class CafeCommentInsertAction extends Action{
 		CafeCommentDao.getInstance().insert(dto);
 		
 		return new ActionForward("/cafe/detail.do?num=" + ref_group, true);
+		//return new ActionForward("/cafe/private/detail.do?num=" + ref_group, true);
 	}
 }

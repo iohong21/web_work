@@ -56,11 +56,11 @@ public class CafeDetailAction extends Action{
 		// 로그인 여부 확인해서 request 에 담기
 		String id = (String)request.getSession().getAttribute("id");
 		boolean isLogin = id != null;
-		
-		List<CafeCommentDto> commentList = CafeCommentDao.getInstance().getList(num);
-		
-		request.setAttribute("commentList", commentList);
 		request.setAttribute("isLogin", isLogin);
+
+		// 댓글 목록
+		List<CafeCommentDto> commentList = CafeCommentDao.getInstance().getList(num);
+		request.setAttribute("commentList", commentList);
 		
 		return new ActionForward("/views/cafe/detail.jsp");
 	}

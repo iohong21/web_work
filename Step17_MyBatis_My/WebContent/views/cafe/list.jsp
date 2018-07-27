@@ -57,6 +57,9 @@
 							<td>${dto.num }</td>
 							<td>${dto.writer }</td>
 							<td><a href="detail.do?num=${dto.num }&condition=${condition }&keyword=${keyword }&pageNum=${pageNum }">${dto.title }</a></td>
+							<!--  
+							<td><a href="private/detail.do?num=${dto.num }&condition=${condition }&keyword=${keyword }&pageNum=${pageNum }">${dto.title }</a></td>
+							-->
 							<td>${dto.viewCount }</td>
 							<td>${dto.regdate }</td>
 							<td>

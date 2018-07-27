@@ -54,6 +54,22 @@ public class CafeCommentDao {
 		return flag > 0;
 	}
 	
+	// 댓글을 변경하는
+	public boolean update(CafeCommentDto dto) {
+		SqlSession session = null;
+		int flag = 0;
+		try {
+			session = factory.openSession(true);
+			flag = session.update("cafeComment.update", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return flag > 0;
+	}
+	
 	// 댓글 목록을 리턴하는 메소드
 	public List<CafeCommentDto> getList(int ref_group) {
 		SqlSession session = null;

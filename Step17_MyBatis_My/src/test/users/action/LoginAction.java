@@ -27,7 +27,7 @@ public class LoginAction extends Action {
 		String url = request.getParameter("url");
 		
 		if(isLoginSuccess) {
-			// 세션 객체를 이요해서 로그인 처리 하기
+			// 세션 객체를 이용해서 로그인 처리 하기
 			request.getSession().setAttribute("id", id);
 		}
 

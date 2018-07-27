@@ -58,6 +58,9 @@
 					<c:otherwise>
 					 	<li class="page-item">
 	      			<a class="page-link" href="detail.do?num=${dto.prevNum }&condition=${condition }&keyword=${keyword }">이전 글<span class="sr-only">Previous</span></a>
+							<!-- 
+	      			<a class="page-link" href="private/detail.do?num=${dto.prevNum }&condition=${condition }&keyword=${keyword }">이전 글<span class="sr-only">Previous</span></a>
+	      			-->
 	    			</li>
 					</c:otherwise>
 				</c:choose>
@@ -71,6 +74,9 @@
 					<c:otherwise>
 					 	<li class="page-item">
 	      			<a class="page-link" href="detail.do?num=${dto.nextNum }&condition=${condition }&keyword=${keyword }">다음 글<span class="sr-only">Next</span></a>
+					 	  <!--  
+	      			<a class="page-link" href="private/detail.do?num=${dto.nextNum }&condition=${condition }&keyword=${keyword }">다음 글<span class="sr-only">Next</span></a>
+	      			-->
 	    			</li>
 					</c:otherwise>
 				</c:choose>
@@ -81,11 +87,13 @@
 			<c:if test="${id eq dto.writer }">
 				<a href="private/updateform.do?num=${dto.num }&condition=${condition }&keyword=${keyword }">수정</a>
 				&nbsp;&nbsp;
+				<c:set var="isNotDelete" value="yes" />
 				<a href="javascript: deleteConfirm()">삭제</a>
 				<script>
 					function deleteConfirm() {
 						var isDelete = confirm("글을 삭제 하시겠습니까?");
 						if(isDelete) {
+							${isNotDelete }="no";
 							location.href = "private/delete.do?num=${dto.num}";
 						}
 					}
@@ -112,98 +120,58 @@
 
 			<div class="content">${dto.content }</div>			
 			<br />
+			<br />
+			<c:if test="${isNotDelete eq 'yes' }">
+				<a href="list.do?pageNum=${pageNum }&condition=${condition }&keyword=${keyword }">글 목록 보기</a>
+			</c:if>
 			
 			<!-- 댓글에 관련된 UI -->   
 			<div class="comments">
-				<ul>
-					<c:forEach var="tmp" items="${commentList }">
-						<c:choose>
-							<c:when test="${tmp.num eq tmp.comment_group }">
-								<li class="comment">
-							</c:when>
-							<c:otherwise>
-								<li class="comment" style="margin-left: 50px; list-style-type: none">
-								<img class="reply_icon" src="${pageContext.request.contextPath }/resources/images/re.gif" />
-							</c:otherwise>
-						</c:choose>
-						<!--  
-						<li class="comment" style="margin-left: ${tmp.num eq tmp.comment_group ? 0 : 50}px">
-							<c:if test="${tmp.num ne tmp.comment_group }">
-								<img class="reply_icon" src="${pageContext.request.contextPath }/resources/images/re.gif" />
-							</c:if>
-						-->
-							
-							<dl>
-								<dt>
-									<img src="${pageContext.request.contextPath }/resources/images/user_image.gif" />
-									<span>${tmp.writer }</span>
-									<span>${tmp.regdate }</span>
-									
-									<c:choose>
-										<c:when test="${tmp.writer ne id }">
-											<a href="javascript: " class="reply_link">답글</a> |
-										</c:when>
-										<c:otherwise>
-											<span class="muted">답글 |</span>
-										</c:otherwise>
-									</c:choose>
-									
-									<c:choose>
-										<c:when test="${tmp.writer eq id }">
-											<a href="javascript: " class="reply_link">수정</a> |
-										</c:when>
-										<c:otherwise>
-											<span class="muted">수정 |</span>
-										</c:otherwise>
-									</c:choose>							
-										
-									<a href="">신고</a>
-								</dt>
-								<dd>									
-									<c:if test="${tmp.num ne tmp.comment_group }">
-										<br /><strong class="muted">${tmp.target_id }</strong>
-									</c:if>
-									
-									<pre>${tmp.content }</pre>
-								</dd>
-							</dl>
-							<c:choose>
-								<c:when	test="${tmp.writer eq id }">
-									<form action="comment_update.do" method="post">
-										<input type="hidden" name="myNum" value="${tmp.num }"/>
-								</c:when>
-								<c:otherwise>
-									<form action="comment_insert.do" method="post">
-								</c:otherwise>
-							</c:choose>
-								<!-- 덧글 작성자 -->
-								<input type="hidden" name="writer" value="${id }"/>
-								<!-- 덧글 그룹 -->
-								<input type="hidden" name="ref_group" value="${dto.num }" />
-								<!-- 덧글 대상 -->
-								<input type="hidden" name="target_id" value="${tmp.writer }" />
-								<input type="hidden" name="comment_group" value="${tmp.comment_group }" />
-								<textarea class="replyText" name="content"><c:if test="${tmp.writer eq id }">${tmp.content }</c:if></textarea>
-								<button type="submit">등록</button>
-							</form>						
-						</li>
-					</c:forEach>
-				</ul>
+				<c:forEach var="tmp" items="${commentList }">
+					<%--
+					<div class="comment" style="margin-left: ${tmp.num eq tmp.comment_group ? 0 : 50}px">
+					--%>
+					<div class="comment" <c:if test="${tmp.num ne tmp.comment_group }">style="margin-left:50px;"</c:if>>
+						<c:if test="${tmp.num ne tmp.comment_group }">
+							<img class="reply_icon" src="${pageContext.request.contextPath }/resources/images/re.gif" />
+						</c:if>
+						<img src="${pageContext.request.contextPath }/resources/images/user_image.gif" />
+						<span>${tmp.writer }</span>
+						<span>${tmp.regdate }</span>
+						<a href="javascript:" class="reply_link">답글</a> |
+						<a href="">신고</a>
+						
+						<c:if test="${tmp.num ne tmp.comment_group }">
+							<br /><strong class="muted">${tmp.target_id }</strong>
+						</c:if>
+						
+						<p>${tmp.content }</p>
+						<form action="comment_insert.do" method="post">
+							<!-- 덧글 작성자 -->
+							<input type="hidden" name="writer" value="${id }"/>
+							<!-- 덧글 그룹 -->
+							<input type="hidden" name="ref_group" value="${dto.num }" />
+							<!-- 덧글 대상 -->
+							<input type="hidden" name="target_id" value="${tmp.writer }" />
+							<input type="hidden" name="comment_group" value="${tmp.comment_group }" />
+							<textarea name="content"></textarea>
+							<button type="submit">등록</button>
+						</form>						
+					</div>
+				</c:forEach>
 				<br /><br />
 				<!-- 원글에 댓글을 작성할수 있는 폼 -->
 				<div class="comment_form">
-					<form action="comment_insert.do" method="post" id="commentForm" >
+					<form action="comment_insert.do" method="post" id="commentForm">
 						<input type="hidden" name="writer" value="${id }" />
 						<input type="hidden" name="ref_group" value="${dto.num }" />
 						<input type="hidden" name="target_id" value="${dto.writer }" />
-						<textarea id="replyText" name="content" cols="70" rows="3" style="resize: none;"  <c:if test="${empty id }">placeholder="로그인 하세요..."</c:if> ></textarea>
+						<textarea name="content" cols="70" rows="3" style="resize: none;"></textarea>
 						<button type="submit">등록</button>
 					</form>
 				</div>
-			</div>	
-			<br /><br />
-			<a href="list.do?pageNum=${pageNum }&condition=${condition }&keyword=${keyword }">글 목록 보기</a>
-			<br /><br />
+			</div>			
+			
 		</div>
 		<script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.js"></script>
 		<script>
@@ -212,7 +180,7 @@
 			var isLogin = ${isLogin};
 			
 			// 댓글 전송 이벤트가 일어 났을때 실행할 함수 등록
-			$(".comment_form > form, .comment form").on("submit", function(){
+			$("#commentForm, .comment form").on("submit", function(){
 				if(!isLogin) {
 					var isGoLogin = confirm("로그인 하시겠습니까?");
 					if(isGoLogin) {
@@ -223,25 +191,25 @@
 					return false;
 				}
 			});
-
+			
 			$(".comment .reply_link").click(function(){
-				var orgText = $(this).text();
-				if(orgText == "답글취소") {
-					$(this).text("답글");
-				} else if(orgText == "수정취소") {
-					$(this).text("수정");
-				} else if(orgText == "답글") {
-					$(this).text("답글취소");
-				} else {
-					$(this).text("수정취소");
+				/*
+				if({tmp.writer ne loginId})	{	
+					$(this)
+					.parent()
+					.find("form")
+					.slideToggle(100);
 				}
-				
+				*/
+				var writer = ${tmp.writer};
+				var id = ${id};
+				console.log(writer);
+				console.log(id);
 				$(this)
-				.parent().parent().parent()
+				.parent()
 				.find("form")
 				.slideToggle(100);
 			});
-			
 		</script>
 	</body>
 </html>

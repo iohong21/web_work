@@ -1,6 +1,7 @@
 package test.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -46,11 +47,30 @@ public class LoginFilter implements Filter{	//1.
 		// 현재 요청된 url 정보를 읽어온다. (원래 이동하려던 목적지)
 		String url = request.getRequestURI();
 		
+		Enumeration<String> pNames = request.getParameterNames();
+		StringBuilder qry = new StringBuilder();
+		boolean isFirst = true;
+		while(pNames.hasMoreElements()) {
+			if(isFirst) {
+				qry.append("?");
+				isFirst = false;
+			}
+			String pName = pNames.nextElement();
+			String pVal = request.getParameter(pName);
+			qry.append(pName);
+			qry.append("=");
+			qry.append(pVal);
+			qry.append("&");
+		}
+		
+		System.out.println("param: " + qry.toString());
+		
+		
 		// id 가 저장되어 있는지 읽어와 본다.
 		String id = (String)session.getAttribute("id");
 		if(id == null) {
 			// 로그인 페이지로 이동하라고 리다이렉트 응답을 준다.
-			response.sendRedirect(cPath + "/users/loginform.do?url=" + url);
+			response.sendRedirect(cPath + "/users/loginform.do?url=" + url + qry.toString());
 		} else {
 			// 요청의 흐름 계속 진행시키기
 			chain.doFilter(req, res);
@@ -63,3 +83,4 @@ public class LoginFilter implements Filter{	//1.
 		
 	}
 }
+
