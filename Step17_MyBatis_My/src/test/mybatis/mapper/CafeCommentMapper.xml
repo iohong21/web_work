@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafeComment">
 	<sql id="commentColumn">
-		num, writer, content, target_id, ref_group, comment_group, to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
+		num, writer, content, target_id, ref_group, comment_group, isdelete, to_char(regdate, 'yyyy/mm/dd am hh:mi') as regdate
 	</sql>
 	<insert id="insert" parameterType="CafeCommentDto" >
 		INSERT INTO board_cafe_comment(num, writer, content, target_id, ref_group, comment_group)
@@ -12,6 +12,7 @@
 	<update id="update" parameterType="CafeCommentDto">
 		UPDATE board_cafe_comment 
 		   SET content = #{content}
+		     , isdelete = #{isdelete}
 		 WHERE num = #{num}
 	</update>
 		

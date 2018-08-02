@@ -16,12 +16,16 @@ public class CafeCommentUpdateAction extends Action {
 		int num = Integer.parseInt(request.getParameter("myNum"));
 		int ref_Group = Integer.parseInt(request.getParameter("ref_group"));		
 		String content = request.getParameter("content");
+		String isdelete = request.getParameter("isDelete");
+		
+		System.out.println("isDelete: " + isdelete);
 		
 		CafeCommentDto dto = new CafeCommentDto();
 		dto.setNum(num);
 		dto.setContent(content);
+		dto.setIsdelete(isdelete);
 		CafeCommentDao.getInstance().update(dto);
-		
+
 		return new ActionForward("/cafe/detail.do?num=" + ref_Group, true);
 	}
 }

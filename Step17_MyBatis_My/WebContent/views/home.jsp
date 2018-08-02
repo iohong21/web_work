@@ -36,6 +36,10 @@
 			<li><a href="cafe/list.do">카페글 목록 보기</a></li>
 		</ul>
 		
+		<ul>
+			<li><a href="gallery/list.do">사진 갤러리</a></li>
+		</ul>
+		
 		
 		<h3>오늘의 공지 사항</h3>
 		<ul>

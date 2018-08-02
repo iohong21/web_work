@@ -41,6 +41,10 @@
 			.muted {
 				color: #888;
 			}
+			
+			.deleteComment{
+				color: red;
+			}
 		</style>
 	</head>
 	<body>
@@ -95,18 +99,22 @@
 			<br />
 
 			<table class="table table-bordered">
-				<th>글번호</th>
-				<td>${dto.num }</td>
-				<tr></tr>
-				<th>작성자</th>
-				<td>${dto.writer}</td>
-				<tr></tr>
-				<th>제목</th>
-				<td>${dto.title }</td>
-				<tr></tr>
-				<th>작성일</th>
-				<td>${dto.regdate }</td>
-				<tr></tr>
+				<tr>
+					<th>글번호</th>
+					<td>${dto.num }</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>${dto.writer}</td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td>${dto.title }</td>
+				</tr>
+				<tr>
+					<th>작성일</th>
+					<td>${dto.regdate }</td>
+				</tr>
 			</table>
 
 
@@ -141,30 +149,66 @@
 									
 									<c:choose>
 										<c:when test="${tmp.writer ne id }">
-											<a href="javascript: " class="reply_link">답글</a> |
+											<c:choose>
+												<c:when test="${tmp.isdelete ne 'Y' }">
+													<a href="javascript: " class="reply_link">답글</a>
+												</c:when>
+												<c:otherwise>
+													<span class="muted">답글</span>
+												</c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
-											<span class="muted">답글 |</span>
+											<span class="muted">답글</span>
 										</c:otherwise>
 									</c:choose>
 									
 									<c:choose>
 										<c:when test="${tmp.writer eq id }">
-											<a href="javascript: " class="reply_link">수정</a> |
+										  <c:choose>
+										  	<c:when test="${tmp.isdelete ne 'Y' }">
+													<a href="javascript: " class="reply_link">수정</a>
+													<a href="comment_update.do?myNum=${tmp.num }&ref_group=${dto.num }&content=${tmp.content}&isDelete=Y">삭제</a>
+												</c:when>
+												<c:otherwise>
+													<span class="muted">수정</span>
+												</c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
-											<span class="muted">수정 |</span>
+											<span class="muted">수정</span>
 										</c:otherwise>
 									</c:choose>							
 										
-									<a href="">신고</a>
+									<c:choose>
+										<c:when test="${tmp.isdelete ne 'Y' }">
+											<c:choose>
+												<c:when test="${tmp.writer eq id }">
+													<span class="muted"> | 신고</span>
+												</c:when>
+												<c:otherwise>
+													<a href=""> | 신고</a>
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<span class="muted"> | 신고</span>
+										</c:otherwise>
+									</c:choose>
 								</dt>
 								<dd>									
 									<c:if test="${tmp.num ne tmp.comment_group }">
 										<br /><strong class="muted">${tmp.target_id }</strong>
 									</c:if>
 									
-									<pre>${tmp.content }</pre>
+									<c:choose>
+										<c:when test="${tmp.isdelete eq 'N' }">
+											<pre>${tmp.content }</pre>
+										</c:when>
+										<c:otherwise>
+											<span class="deleteComment">삭제된 댓글 입니다.</span></pre>
+										</c:otherwise>
+									</c:choose>
 								</dd>
 							</dl>
 							<c:choose>
@@ -176,6 +220,7 @@
 									<form action="comment_insert.do" method="post">
 								</c:otherwise>
 							</c:choose>
+								<input type="hidden" name="isDelete" value="N"/>
 								<!-- 덧글 작성자 -->
 								<input type="hidden" name="writer" value="${id }"/>
 								<!-- 덧글 그룹 -->
@@ -220,6 +265,7 @@
 								          + "${pageContext.request.contextPath}"
 								          + "/cafe/detail.do?num=${dto.num}&pageNum=${pageNum}";
 					}
+					
 					return false;
 				}
 			});

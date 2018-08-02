@@ -8,10 +8,11 @@ public class CafeCommentDto {
 	private int ref_group;
 	private int comment_group;
 	private String regdate;
+	private String isdelete;
 	
 	public CafeCommentDto() {}
 	public CafeCommentDto(int num, String writer, String content, String target_id, int ref_group, int comment_group,
-			String regdate) {
+			String regdate, String isdelete) {
 		this.num = num;
 		this.writer = writer;
 		this.content = content;
@@ -19,7 +20,9 @@ public class CafeCommentDto {
 		this.ref_group = ref_group;
 		this.comment_group = comment_group;
 		this.regdate = regdate;
+		this.isdelete = isdelete;
 	}
+
 	public int getNum() {
 		return num;
 	}
@@ -74,5 +77,13 @@ public class CafeCommentDto {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public String getIsdelete() {
+		return isdelete;
+	}
+
+	public void setIsdelete(String isdelete) {
+		this.isdelete = isdelete;
 	}
 }

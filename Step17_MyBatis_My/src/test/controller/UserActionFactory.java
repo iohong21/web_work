@@ -15,6 +15,9 @@ import test.file.action.FileDownloadAction;
 import test.file.action.FileListAction;
 import test.file.action.FileUploadAction;
 import test.file.action.FileUploadFormAction;
+import test.gallery.action.GalleryListAction;
+import test.gallery.action.GalleryUploadAction;
+import test.gallery.action.GalleryUploadformAction;
 import test.member.action.MemberDeleteAction;
 import test.member.action.MemberInsertAction;
 import test.member.action.MemberInsertFormAction;
@@ -90,6 +93,10 @@ public class UserActionFactory {
 		
 		case "/cafe/comment_insert": action = new CafeCommentInsertAction(); break;
 		case "/cafe/comment_update": action = new CafeCommentUpdateAction(); break;
+		
+		case "/gallery/list": action = new GalleryListAction(); break;
+		case "/gallery/private/upload_form": action = new GalleryUploadformAction(); break;
+		case "/gallery/private/upload": action = new GalleryUploadAction(); break;
 		
 		}
 
