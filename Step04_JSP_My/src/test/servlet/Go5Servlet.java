@@ -17,7 +17,6 @@ public class Go5Servlet extends HttpServlet{
 		
 		// 요청 전달자 객체의 참조값 얻어와서
 		RequestDispatcher rd = request.getRequestDispatcher("/gura.jsp");
-		
 		// forward 이동하기
 		rd.forward(request,  response);
 	}
