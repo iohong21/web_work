@@ -26,7 +26,7 @@ CREATE TABLE T_FRIEND(
 );
 
 CREATE SEQUENCE TCafe_seq;
-CREATE TABLE MY_CAFE(
+CREATE TABLE T_CAFE(
 	num NUMBER PRIMARY KEY,
 	writer VARCHAR2(50),
 	CONSTRAINT TCafe_writer_fk FOREIGN KEY(writer) REFERENCES T_USERS(id) ON DELETE CASCADE,
@@ -43,5 +43,19 @@ CREATE TABLE T_CAFE_COMMENT(
 	viewcount NUMBER DEFAULT 0,
 	likecount NUMBER DEFAULT 0,
 	hatecount NUMBER DEFAULT 0,
-	isdeleted CHAR(1) DEFAULT 'N'
+	deleted CHAR(1) DEFAULT 'N',
+	CONSTRAINT TCafeComment_deleted_ck CHECK (deleted IN('Y', 'N'))
 );
+
+CREATE TABLE T_CONFIG(
+  code CHAR(1) PRIMARY KEY,
+  pagerowcount NUMBER DEFAULT 5,
+  pagedisplaycount NUMBER DEFAULT 5
+);
+insert into T_CONFIG(code, pagerowcount, pagedisplaycount) values ('1',5,5);
+
+
+
+
+
+
